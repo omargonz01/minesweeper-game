@@ -1,81 +1,92 @@
-const scoreCounter = document.querySelector('.score-counter');
-
+// Select the relevant elements from the page
 const grid = document.querySelector('.grid');
-
+const scoreCounter = document.querySelector('.score-counter');
 const endGameScreen = document.querySelector('.end-game-screen');
-
 const endGameText = document.querySelector('.end-game-text');
+const playAgainButton = document.querySelector('.play-again');
 
-const playAgainButton = document.querySelector('.play-again')
-
+// Initialise the variables needed for the game setup
 const totalCells = 100;
-const totalBombs = 90;
-const maxScore = 15;
+const totalBombs = 6;
+const maxScore = totalCells - totalBombs;
 const bombsList = [];
 
 let score = 0;
 
-function updateScore() {
-  score++;
-  scoreCounter.innerText = score.toString().padStart(5, '0');
-
-  if (score === maxScore) {
-    endGame(true);
-  }
-}
-
-const cell = document.createElement('div');
-cell.classList.add('cell');
-//<div class="cell"></div>
-
-for (let i = 1; i <= 100; i++) {
-  //cell = <div></div>
-  const cell = document.createElement('div');
-  cell.classList.add('cell');
-  //<div class="cell"></div>
-
-  cell.addEventListener('click', function () {
-    updateScore();
-    if (bombsList.includes(i)) {
-      cell.classList.add('cell-bomb');
-      endGame(false);
-    }
-    cell.classList.add('cell-clicked');
-  });
-  grid.appendChild(cell);
-}
-
+// Generate a list of unique bombs
 while (bombsList.length < totalBombs) {
-  //  Generate a random number between 1 & 100,inclusive
+  // Generate a random number
   const randomNumber = Math.floor(Math.random() * totalCells) + 1;
-  
+
+  // Add the number to the list if not already included
   if (!bombsList.includes(randomNumber)) {
     bombsList.push(randomNumber);
   }
 }
 
+for (let i = 1; i <= totalCells; i++) {
+  // Create a cell
+  const cell = document.createElement('div');
+  cell.classList.add('cell');
+
+  // Manage the "click" event for the cell
+  cell.addEventListener('click', function () {
+    // Don't do anything if it is already clicked
+    if (cell.classList.contains('cell-clicked')) {
+      return;
+    }
+
+    if (bombsList.includes(i)) {
+      cell.classList.add('cell-bomb');
+      endGame(false);
+    } else {
+      cell.classList.add('cell-clicked');
+      updateScore();
+    }
+  })
+
+  // Put the cell in the grid
+  grid.appendChild(cell);
+}
+
+// *---------------------------
+// * FUNCTIONS
+// *---------------------------
+
+// Function to increment the score and display it
+function updateScore() {
+  score++;
+  scoreCounter.innerText = score.toString().padStart(5, '0');
+  
+  if (score === maxScore) {
+    endGame(true);
+  }
+}
+
+// Function for when the game ends
 function endGame(isVictory) {
   if (isVictory) {
     endGameText.innerHTML = 'YOU<br>WON';
     endGameScreen.classList.add('win');
-  } else {
-    endGameText.innerHTML = 'YOU<br>LOST';
-    endGameScreen.classList.add('lost');
-    gameOver();
   }
+
+  revealAllBombs();
   endGameScreen.classList.remove('hidden');
+}
+
+// Function to reveal all bombs
+function revealAllBombs() {
+  const cells = document.querySelectorAll('.cell');
+
+  for (let i = 1; i <= cells.length; i++) {
+    const cell = cells[i - 1];
+
+    if (bombsList.includes(i)) {
+      cell.classList.add('cell-bomb');
+    }
+  }
 }
 
 playAgainButton.addEventListener('click', function () {
   window.location.reload();
 });
-
-const cells= document.getElementsByClassName('cell');
-
-function gameOver(){
-  for(let j=1; j<=100; j++)
-  {
-    if(bombsList.includes(j))
-    cells[j].classList.add('cell-bomb');
-  }
-}

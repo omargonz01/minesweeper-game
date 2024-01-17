@@ -1,91 +1,100 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: 'Helvetica';
-  font-weight: bold;
-  color: rgb(0, 50, 20);
-  font-size: 40px;
-  background-color: rgb(216, 238, 232);
-  padding: 16px;
+	padding: 16px;
+	font-family: 'Helvetica', sans-serif;
+	line-height: 1;
+	color: rgb(0, 23, 50);
+	background-color: rgb(216, 238, 232);
 }
 
 .game-container {
-  width: 484px;
-}
-
-.game-panel {
-}
-
-.game-board {
-  border: 2px solid rgb(0, 23, 50);
-  position: relative;
+	width: calc(480px + 4px);
 }
 
 h1 {
-  font-size: 40px;
+	font-size: 40px;
 }
 
 .score {
-  font-size: 32px;
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
+	font-size: 32px;
+}
+
+.game-board {
+	border: 2px solid rgb(0, 23, 50);
+	position: relative;
 }
 
 .grid {
-  display: flex;
-  flex-wrap: wrap;
+	height: calc((48px * 10) + 4px);
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .cell {
-  border: 1px solid black;
-  width: 48px;
-  height: 48px;
-  cursor: pointer;
-  outline: 1px solid black;
+	width: 48px;
+	height: 48px;
+	cursor: pointer;
+	outline: 1px dashed black;
+}
+
+.cell-clicked {
+	background-color: rgb(157, 197, 199);
+	cursor: not-allowed;
 }
 
 .cell-bomb {
-  background-image: url('./images/bomb.png');
+	background-color: rgb(241, 117, 78);
+	background-image: url('images/bomb.png');
+	background-size: contain;
+	cursor: not-allowed;
 }
 
 .end-game-screen {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(241, 117, 78, 0.7);
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(241, 117, 78, 0.7);
+
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	gap: 16px;
+}
+
+.win {
+	background-color: rgba(78, 241, 187, 0.7);
 }
 
 .end-game-text {
-  font-size: 48px;
-  text-transform: uppercase;
-  font-family: 'Press Start 2P';
+	font-size: 48px;
+	font-family: 'Press Start 2P', cursive;
+	text-transform: uppercase;
 }
 
 .btn {
-  font-size: 22px;
-  text-transform: uppercase;
-  font-family: 'Helvetica';
-  padding: 4px 20px 4px 20px;
-  cursor: pointer;
-  border: 2px solid rgb(0, 23, 50);
+	font-size: 24px;
+	font-family: 'Helvetica', sans-serif;
+	padding: 4px 20px 8px 20px;
+	cursor: pointer;
+	text-transform: uppercase;
+	border: 2px solid rgb(0, 23, 50);
 }
 
 .btn:hover {
-  background-color: rgb(203, 224, 221);
+	background-color: rgb(203, 224, 221);
 }
 
 .hidden {
-  display: none;
+	display: none;
 }
